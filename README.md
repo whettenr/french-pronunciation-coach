@@ -107,7 +107,6 @@ The application will launch a web server, and you can access the frontend throug
 - **Personalized Feedback**: AI-driven feedback tailored to individual pronunciation errors
 - **Basic Scoring**: Pronunciation scoring based on Levenshtein distance to quantify pronunciation accuracy
 - **Text-to-Speech (TTS)**: Multiple TTS strategies including Coqui, Hugging Face, and Kyutai
-- **Speech Recognition**: Real-time speech input processing using Wav2Vec2 (requires FFmpeg for audio format conversion; works on Firefox and Chrome, Safari support pending)
 - **Web Frontend**: User-friendly interface for interactive learning
 - **Scoring Service**: Automated pronunciation evaluation and scoring
 
