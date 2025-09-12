@@ -1,5 +1,7 @@
 🎙️ French Pronunciation App
 
+**Note:** This project is in **early stage development**. Your contributions and feedback are highly appreciated to help make it better!
+
 French Pronunciation App helps learners practice and improve their French pronunciation through phoneme recognition, text-to-speech synthesis, and AI-powered feedback.
 
 It provides:
@@ -157,13 +159,6 @@ Open in your browser:
 
 🤝 Contributing
 
-This project is in early development, and contributions are welcome!
+Welcome to the French Pronunciation App community! This project is in its early stages, and every contribution counts—no matter how big or small. Whether you want to improve the scoring system, add new TTS or feedback strategies, enhance the frontend, fix bugs, or optimize performance, your help is invaluable.
 
-You can:
-• Improve scoring (currently basic Levenshtein distance)
-• Add new TTS or feedback strategies
-• Enhance frontend usability
-• Fix bugs or optimize performance
-
-Submit a Pull Request or open an Issue to contribute.
-
+Feel free to submit a Pull Request or open an Issue anytime. Together, we can build a fantastic tool for French learners. Thank you for being part of this journey!
