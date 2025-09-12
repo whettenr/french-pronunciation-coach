@@ -1,123 +1,169 @@
-# French Pronunciation App
+🎙️ French Pronunciation App
 
-This application helps users improve their French pronunciation through interactive practice, phoneme recognition, and AI-powered personalized feedback. It provides phonetic analysis, text-to-speech synthesis, speech recognition, and basic scoring using Levenshtein distance to guide learners in mastering French sounds.
+French Pronunciation App helps learners practice and improve their French pronunciation through phoneme recognition, text-to-speech synthesis, and AI-powered feedback.
 
-## Requirements
+It provides:
+• Phoneme-level analysis
+• Beginner-friendly feedback with examples
+• Basic pronunciation scoring
+• Interactive practice via a web interface
 
-- Python 3.11 (recommended for optimal performance)
-- FFmpeg (for audio format conversion)
+⸻
+
+## Table of Contents
+- [Features](#-features)
+- [Requirements](#-requirements)
+- [Setup](#️-setup)
+- [Configuration](#-configuration)
+- [Run the App](#-run-the-app)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+
+⸻
+
+✨ Features
+• Phoneme Recognition → Detects and analyzes French phonemes from user speech
+• Personalized Feedback → AI compares expected vs. spoken phonemes and explains mistakes in simple English
+• Basic Scoring → Uses Levenshtein distance to quantify accuracy (⚠️ very basic, future improvements needed)
+• Text-to-Speech (TTS) → Choose from Hugging Face, Coqui, or Kyutai models
+• Web Frontend → User-friendly, interactive practice interface
+• Cross-Browser Support → Works on Firefox and Chrome ✅, not yet supported on Safari ❌
+
+⸻
+
+📦 Requirements
+• Python 3.11 (recommended)
+• FFmpeg (for audio format conversion)
 
 ### Installing FFmpeg
+• macOS (Homebrew):
 
-FFmpeg is required for processing audio files uploaded from web browsers.
+```
+brew install ffmpeg
+```
 
-- **macOS** (with Homebrew):
-  ```
-  brew install ffmpeg
-  ```
+• Ubuntu/Debian:
 
-- **Ubuntu/Debian**:
-  ```
-  sudo apt update
-  sudo apt install ffmpeg
-  ```
+```
+sudo apt update && sudo apt install ffmpeg
+```
 
-- **Windows** (with Chocolatey):
-  ```
-  choco install ffmpeg
-  ```
+• Windows (Chocolatey):
 
-- Or download from the [FFmpeg website](https://ffmpeg.org/download.html) and add the `bin` directory to your PATH.
+```
+choco install ffmpeg
+```
 
-## Setup Instructions
+• Or download from the FFmpeg website and add the bin folder to your PATH.
 
-1. Create a virtual environment (recommended):
-   ```
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+⸻
 
-2. Install the required dependencies:
-   ```
-   pip install -r requirements.txt
-   ```
+⚙️ Setup
+1. Create a virtual environment
 
-3. Create the models directory:
-   ```
-   mkdir models
-   ```
+```
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+```
 
-4. Download the language models (choose one or more based on your needs):
-   - **Mistral-7B** (General-purpose instruction model):
-     ```
-     huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q5_K_M.gguf --local-dir models --local-dir-use-symlinks False
-     ```
-   - **Llama-3.2-3B** (Efficient 3B parameter model):
-     ```
-     huggingface-cli download unsloth/Llama-3.2-3B-Instruct-GGUF Llama-3.2-3B-Instruct-Q5_K_S.gguf --local-dir models --local-dir-use-symlinks False
-     ```
-   - **Lucie-7B** (French-optimized model):
-     ```
-     huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
-     ```
+2. Install dependencies
 
-## Configuration
+```
+pip install -r requirements.txt
+```
 
-The application uses a JSON configuration file (`config.json`) to select strategies and models. Create or edit `config.json` in the root directory.
+3. Create the models directory
 
-### Available Strategies
+```
+mkdir models
+```
 
-- **Feedback Strategies** (for AI-powered personalized pronunciation feedback):
-  - `llama-cpp`: Optimized for speed and performance balance using llama.cpp (recommended)
-  - `llama`: Standard Llama-based feedback
-  - `rb`: Rule-based feedback
+4. Download language models (choose one or more):
+• Lucie-7B → French-optimized (recommended)
 
-- **TTS Strategies** (for text-to-speech synthesis):
-  - `hf`: Hugging Face models (recommended for French: `facebook/mms-tts-fra`)
-  - `coqui`: Coqui TTS
-  - `kyutai`: Kyutai TTS
+```
+huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
+```
 
-### Example Configuration
+• Mistral-7B → General-purpose, strong all-around model
+
+```
+huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q5_K_M.gguf --local-dir models --local-dir-use-symlinks False
+```
+
+• Llama-3.2-3B → Lightweight, efficient model
+
+```
+huggingface-cli download unsloth/Llama-3.2-3B-Instruct-GGUF Llama-3.2-3B-Instruct-Q5_K_S.gguf --local-dir models --local-dir-use-symlinks False
+```
+
+⸻
+
+🔧 Configuration
+
+The app uses a config.json file to select strategies and models.
+
+### Feedback Strategies
+• cpp → Runs on llama.cpp with GGUF models ⚡ (recommended for speed and memory efficiency)
+• llama → Standard Hugging Face Llama backend
+• rb → Rule-based fallback feedback
+
+### TTS Strategies
+• hf → Hugging Face models
+• facebook/mms-tts-fra → ⚡ Much faster, recommended for interactive use
+• coqui → Coqui TTS
+• kyutai → 🎵 Higher quality and more natural speech, but slower than Hugging Face
+
+### Example config.json
 
 ```json
 {
-  "feedback_strategy": "llama-cpp",
+  "feedback_strategy": "cpp",
   "tts_strategy": "hf",
   "feedback_model": "models/Lucie-7B-Instruct-v1.1-q4_k_m.gguf",
   "tts_model": "facebook/mms-tts-fra"
 }
 ```
 
-- If `llama-cpp` is selected for feedback, specify the model path (e.g., one of the downloaded GGUF models). Lucie-7B is recommended for French language tasks.
-- For Hugging Face TTS, use `facebook/mms-tts-fra` for optimal French pronunciation.
-- **Note**: The first LLM inference may be slower due to model loading and initialization.
+📌 Notes:
+• cpp = llama.cpp → best for fast, efficient inference with GGUF models.
+• Recommended models: Lucie-7B (French-focused) or Mistral-7B (general-purpose).
+• TTS trade-off: facebook/mms-tts-fra (fast) vs Kyutai (better quality, slower).
+• First LLM inference may be slower due to model loading.
 
-## Running the Application
+⸻
 
-Start the app with:
+🚀 Run the App
+
 ```
 python app.py
 ```
 
-The application will launch a web server, and you can access the frontend through your browser.
+Open in your browser:
+👉 http://localhost:8000
 
-## Features
+⚠️ Supported browsers: Firefox and Chrome ✅ | Safari ❌ (not supported yet).
 
-- **Phoneme Recognition**: Accurate detection and analysis of French phonemes from user speech
-- **Personalized Feedback**: AI-driven feedback tailored to individual pronunciation errors
-- **Basic Scoring**: Pronunciation scoring based on Levenshtein distance to quantify pronunciation accuracy
-- **Text-to-Speech (TTS)**: Multiple TTS strategies including Coqui, Hugging Face, and Kyutai
-- **Web Frontend**: User-friendly interface for interactive learning
-- **Scoring Service**: Automated pronunciation evaluation and scoring
+⸻
 
-## Project Structure
+📂 Project Structure
+• app.py → Main FastAPI app
+• api/ → API routes and endpoints
+• core/ → Core logic: phoneme recognition, scoring, feedback, TTS
+• frontend/ → Web interface (HTML, JS, CSS)
+• models/ → Local directory for downloaded models
 
-- `app.py`: Main Flask application
-- `api/`: API routes and endpoints
-- `core/`: Core functionality including phonetics, scoring, and services
-- `frontend/`: Web interface files (HTML, JS, CSS)
-- `models/`: Directory for downloaded language models (not included in repo)
+⸻
 
-## Contributing
+🤝 Contributing
 
-This is an ongoing collaboration project, and contributions are welcome! If you'd like to improve the app, add features, or fix issues, please feel free to submit pull requests or open issues on the repository.
+This project is in early development, and contributions are welcome!
+
+You can:
+• Improve scoring (currently basic Levenshtein distance)
+• Add new TTS or feedback strategies
+• Enhance frontend usability
+• Fix bugs or optimize performance
+
+Submit a Pull Request or open an Issue to contribute.
+
