@@ -1,122 +1,136 @@
-🎙️ French Pronunciation App
+# 🎙️ French Pronunciation App
 
-**Note:** This project is in **early stage development**. Your contributions and feedback are highly appreciated to help make it better!
+Welcome to the **French Pronunciation App**! This tool helps learners improve their French pronunciation using phoneme recognition, text-to-speech synthesis, and AI-powered feedback.
 
-French Pronunciation App helps learners practice and improve their French pronunciation through phoneme recognition, text-to-speech synthesis, and AI-powered feedback.
+---
 
-It provides:
-• Phoneme-level analysis
-• Beginner-friendly feedback with examples
-• Basic pronunciation scoring
-• Interactive practice via a web interface
+## 🚀 Overview
 
-⸻
+This app provides:
 
-## Table of Contents
+- **Phoneme Recognition**: Detects and analyzes French phonemes from user speech.
+- **Personalized Feedback**: AI compares expected vs. spoken phonemes and explains mistakes in simple English.
+- **Basic Scoring**: Uses Levenshtein distance to quantify pronunciation accuracy.
+- **Text-to-Speech (TTS)**: Supports Hugging Face, Coqui, and Kyutai models.
+- **Interactive Web Interface**: User-friendly and engaging practice environment.
+- **Cross-Browser Support**: Works on Firefox and Chrome (Safari not yet supported).
+
+---
+
+## 📋 Table of Contents
+
 - [Features](#-features)
 - [Requirements](#-requirements)
-- [Setup](#️-setup)
+- [Setup](#-setup)
 - [Configuration](#-configuration)
-- [Run the App](#-run-the-app)
+- [Running the App](#-running-the-app)
 - [Project Structure](#-project-structure)
 - [Contributing](#-contributing)
+- [License](#-license)
 
-⸻
+---
 
-✨ Features
-• Phoneme Recognition → Detects and analyzes French phonemes from user speech
-• Personalized Feedback → AI compares expected vs. spoken phonemes and explains mistakes in simple English
-• Basic Scoring → Uses Levenshtein distance to quantify accuracy (⚠️ very basic, future improvements needed)
-• Text-to-Speech (TTS) → Choose from Hugging Face, Coqui, or Kyutai models
-• Web Frontend → User-friendly, interactive practice interface
-• Cross-Browser Support → Works on Firefox and Chrome ✅, not yet supported on Safari ❌
+## ✨ Features
 
-⸻
+- **Phoneme Recognition**: Analyze French phonemes from speech input.
+- **AI-Driven Feedback**: Clear, beginner-friendly explanations of pronunciation errors.
+- **Pronunciation Scoring**: Simple scoring based on phoneme similarity.
+- **Multiple TTS Options**: Choose from fast or high-quality speech synthesis models.
+- **Web Frontend**: Accessible and interactive practice interface.
+- **Browser Compatibility**: Tested on Firefox and Chrome.
 
-📦 Requirements
-• Python 3.11 (recommended)
-• FFmpeg (for audio format conversion)
+---
+
+## 📦 Requirements
+
+- **Python 3.11** (recommended)
+- **FFmpeg** (for audio format conversion)
 
 ### Installing FFmpeg
-• macOS (Homebrew):
 
-```
-brew install ffmpeg
-```
+- **macOS (Homebrew):**
 
-• Ubuntu/Debian:
+  ```bash
+  brew install ffmpeg
+  ```
 
-```
-sudo apt update && sudo apt install ffmpeg
-```
+- **Ubuntu/Debian:**
 
-• Windows (Chocolatey):
+  ```bash
+  sudo apt update && sudo apt install ffmpeg
+  ```
 
-```
-choco install ffmpeg
-```
+- **Windows (Chocolatey):**
 
-• Or download from the FFmpeg website and add the bin folder to your PATH.
+  ```bash
+  choco install ffmpeg
+  ```
 
-⸻
+- Or download directly from the [FFmpeg website](https://ffmpeg.org/) and add the `bin` folder to your system PATH.
 
-⚙️ Setup
-1. Create a virtual environment
+---
 
-```
-python -m venv venv
-source venv/bin/activate   # Windows: venv\Scripts\activate
-```
+## ⚙️ Setup
 
-2. Install dependencies
+1. **Create a virtual environment**
 
-```
-pip install -r requirements.txt
-```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate   # Windows: venv\Scripts\activate
+   ```
 
-3. Create the models directory
+2. **Install dependencies**
 
-```
-mkdir models
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-4. Download language models (choose one or more):
-• Lucie-7B → French-optimized (recommended)
+3. **Create the models directory**
 
-```
-huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
-```
+   ```bash
+   mkdir models
+   ```
 
-• Mistral-7B → General-purpose, strong all-around model
+4. **Download language models** (choose one or more):
 
-```
-huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q5_K_M.gguf --local-dir models --local-dir-use-symlinks False
-```
+   - **Lucie-7B** (French-optimized, recommended):
 
-• Llama-3.2-3B → Lightweight, efficient model
+     ```bash
+     huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
+     ```
 
-```
-huggingface-cli download unsloth/Llama-3.2-3B-Instruct-GGUF Llama-3.2-3B-Instruct-Q5_K_S.gguf --local-dir models --local-dir-use-symlinks False
-```
+   - **Mistral-7B** (General-purpose, strong all-around):
 
-⸻
+     ```bash
+     huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q5_K_M.gguf --local-dir models --local-dir-use-symlinks False
+     ```
 
-🔧 Configuration
+   - **Llama-3.2-3B** (Lightweight and efficient):
 
-The app uses a config.json file to select strategies and models.
+     ```bash
+     huggingface-cli download unsloth/Llama-3.2-3B-Instruct-GGUF Llama-3.2-3B-Instruct-Q5_K_S.gguf --local-dir models --local-dir-use-symlinks False
+     ```
+
+---
+
+## 🔧 Configuration
+
+The app uses a `config.json` file to select feedback and TTS strategies as well as models.
 
 ### Feedback Strategies
-• cpp → Runs on llama.cpp with GGUF models ⚡ (recommended for speed and memory efficiency)
-• llama → Standard Hugging Face Llama backend
-• rb → Rule-based fallback feedback
+
+- `cpp`: Runs on llama.cpp with GGUF models (⚡ recommended for speed and memory efficiency)
+- `llama`: Standard Hugging Face Llama backend
+- `rb`: Rule-based fallback feedback
 
 ### TTS Strategies
-• hf → Hugging Face models
-• facebook/mms-tts-fra → ⚡ Much faster, recommended for interactive use
-• coqui → Coqui TTS
-• kyutai → 🎵 Higher quality and more natural speech, but slower than Hugging Face
 
-### Example config.json
+- `hf`: Hugging Face models
+- `facebook/mms-tts-fra`: ⚡ Much faster, recommended for interactive use
+- `coqui`: Coqui TTS
+- `kyutai`: 🎵 Higher quality and more natural speech, but slower than Hugging Face
+
+### Example `config.json`
 
 ```json
 {
@@ -127,38 +141,61 @@ The app uses a config.json file to select strategies and models.
 }
 ```
 
-📌 Notes:
-• cpp = llama.cpp → best for fast, efficient inference with GGUF models.
-• Recommended models: Lucie-7B (French-focused) or Mistral-7B (general-purpose).
-• TTS trade-off: facebook/mms-tts-fra (fast) vs Kyutai (better quality, slower).
-• First LLM inference may be slower due to model loading.
+> **Notes:**
+> - `cpp` (llama.cpp) offers fast and efficient inference with GGUF models.
+> - Recommended feedback models: Lucie-7B (French-focused) or Mistral-7B (general-purpose).
+> - TTS trade-offs: `facebook/mms-tts-fra` is faster; `kyutai` provides better quality but is slower.
+> - The first LLM inference may take longer due to model loading.
 
-⸻
+---
 
-🚀 Run the App
+## ▶️ Running the App
 
-```
+Start the app with:
+
+```bash
 python app.py
 ```
 
-Open in your browser:
-👉 http://localhost:8000
+Then open your browser and navigate to:
 
-⚠️ Supported browsers: Firefox and Chrome ✅ | Safari ❌ (not supported yet).
+👉 [http://localhost:8000](http://localhost:8000)
 
-⸻
+> **Supported browsers:** Firefox and Chrome ✅  
+> Safari is currently **not supported** ❌
 
-📂 Project Structure
-• app.py → Main FastAPI app
-• api/ → API routes and endpoints
-• core/ → Core logic: phoneme recognition, scoring, feedback, TTS
-• frontend/ → Web interface (HTML, JS, CSS)
-• models/ → Local directory for downloaded models
+---
 
-⸻
+## 📂 Project Structure
 
-🤝 Contributing
+```
+French Pronunciation App/
+├── app.py                 # Main FastAPI application
+├── api/                   # API routes and endpoints
+├── core/                  # Core logic: phoneme recognition, scoring, feedback, TTS
+├── frontend/              # Web interface (HTML, JS, CSS)
+└── models/                # Directory for downloaded models
+```
 
-Welcome to the French Pronunciation App community! This project is in its early stages, and every contribution counts—no matter how big or small. Whether you want to improve the scoring system, add new TTS or feedback strategies, enhance the frontend, fix bugs, or optimize performance, your help is invaluable.
+---
 
-Feel free to submit a Pull Request or open an Issue anytime. Together, we can build a fantastic tool for French learners. Thank you for being part of this journey!
+## 🤝 Contributing
+
+We welcome contributions! Whether you want to improve scoring, add new TTS or feedback strategies, enhance the frontend, fix bugs, or optimize performance, your help is invaluable.
+
+- Fork the repository
+- Create a feature branch
+- Submit a Pull Request or open an Issue to discuss your ideas
+
+Thank you for helping make this app better for French learners worldwide!
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+Thank you for being part of this journey!  
+Happy learning and bon courage!
