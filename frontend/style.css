@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #recordBtn {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  #recordBtn.recording {
+    background-color: grey;
+  }
+  
+  #stopBtn {
+    background-color: lightgrey;
+    color: white;
+  }
+  
+  #stopBtn.active {
+    background-color: #e74c3c;
+  }
+  
+  .submit-btn {
+    background-color: #2ecc71;
+    color: white;
+    margin-top: 20px;
+  }
+  
+  .submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  #showAudioBtn {
+    background-color: #3498db;
+    color: white;
+    margin-top: 10px;
+  }
+  
+  #feedbackSection {
+    margin-top: 20px;
+    padding: 20px;
+    background: #ecf0f1;
+    border-radius: 8px;
+  }
+  
+  #scoreBox {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #feedbackBox {
+    white-space: pre-wrap;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  audio {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .audio-comparison {
+    margin-top: 1em;
+    padding: 0.8em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+.audio-comparison h4 {
+    margin-bottom: 0.5em;
+}
+
+.audio-comparison p {
+    margin: 0.4em 0 0.2em 0;
+}

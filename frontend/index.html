@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>French Pronunciation Trainer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>French Pronunciation Trainer</h1>
+
+    <form id="practiceForm">
+      <label for="text">Enter French word/sentence:</label>
+      <input type="text" id="text" name="text" required />
+
+      <br><br>
+
+      <!-- Choose input type -->
+      <label>
+        <input type="radio" name="inputType" value="record" checked>
+        Record
+      </label>
+      <label>
+        <input type="radio" name="inputType" value="upload">
+        Upload
+      </label>
+
+      <br><br>
+
+      <!-- Recording interface -->
+      <div id="recordSection">
+        <button type="button" id="recordBtn">🎤 Record</button>
+        <button type="button" id="stopBtn" disabled>⏹ Stop</button>
+      </div>
+
+      <!-- Upload interface -->
+      <div id="uploadSection" style="display: none;">
+        <label for="file">Upload audio:</label>
+        <input type="file" id="file" name="file" accept="audio/*">
+      </div>
+
+      <br><br>
+      <button type="submit" class="submit-btn" disabled>Submit</button>
+    </form>
+
+    <br>
+    <button id="showAudioBtn" style="display:none;">Show Recorded Audio</button>
+    <audio id="playback" controls style="display:none;"></audio>
+
+    <h2>Result:</h2>
+    <div id="feedbackSection" style="display:none;">
+      <div id="scoreBox"></div>
+      <div id="feedbackBox"></div>
+      <button id="llmFeedbackBtn" style="display:none;">Get LLM Feedback</button>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

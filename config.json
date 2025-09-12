@@ -1,0 +1,6 @@
+{
+  "feedback_strategy": "llama-cpp",
+  "tts_strategy": "hf",
+  "feedback_model": "models/Lucie-7B-Instruct-v1.1-q4_k_m.gguf",
+  "tts_model": "facebook/mms-tts-fra"
+}

@@ -1,0 +1,11 @@
+MeloTTS/
+__pycache__/
+*.pyc
+temp_audio/
+tts_outputs/
+venv11/
+*.wav
+*.webm
+.DS_Store
+models/
+venv
