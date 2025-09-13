@@ -72,6 +72,13 @@ This app provides:
 
 ## ⚙️ Setup
 
+0. **Clone the repository**
+
+  ```bash
+  git clone https://github.com/othman-istaiteh/french-pronunciation-coach.git
+  cd french-pronunciation-coach
+  ```
+
 1. **Create a virtual environment**
 
    ```bash
@@ -119,7 +126,7 @@ The app uses a `config.json` file to select feedback and TTS strategies as well 
 
 ### Feedback Strategies
 
-- `cpp`: Runs on llama.cpp with GGUF models (⚡ recommended for speed and memory efficiency)
+- `llama-cpp`: Runs on llama.cpp with GGUF models (⚡ recommended for speed and memory efficiency)
 - `llama`: Standard Hugging Face Llama backend
 - `rb`: Rule-based fallback feedback
 
@@ -134,7 +141,7 @@ The app uses a `config.json` file to select feedback and TTS strategies as well 
 
 ```json
 {
-  "feedback_strategy": "cpp",
+  "feedback_strategy": "llama-cpp",
   "tts_strategy": "hf",
   "feedback_model": "models/Lucie-7B-Instruct-v1.1-q4_k_m.gguf",
   "tts_model": "facebook/mms-tts-fra"
@@ -142,7 +149,7 @@ The app uses a `config.json` file to select feedback and TTS strategies as well 
 ```
 
 > **Notes:**
-> - `cpp` (llama.cpp) offers fast and efficient inference with GGUF models.
+> - `llama-cpp` offers fast and efficient inference with GGUF models.
 > - Recommended feedback models: Lucie-7B (French-focused) or Mistral-7B (general-purpose).
 > - TTS trade-offs: `facebook/mms-tts-fra` is faster; `kyutai` provides better quality but is slower.
 > - The first LLM inference may take longer due to model loading.

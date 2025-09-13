@@ -13,6 +13,7 @@ const fileInput = document.getElementById("file");
 const submitBtn = document.querySelector(".submit-btn");
 const form = document.getElementById("practiceForm");
 const textInput = document.getElementById("text");
+const toggleFeedback = document.getElementById("toggleFeedback");
 
 let mediaRecorder;
 let audioForSubmit = null;
@@ -139,40 +140,44 @@ form.onsubmit = async (e) => {
             <p><strong>Your Attempt IPA:</strong> ${data.attempt_ipa}</p>
         `;
 
-        // 2️⃣ Call TTS API
-        const ttsForm = new FormData();
-        ttsForm.append("text", text);
+        if (data.score !== 1) {
+            // 2️⃣ Call TTS API
+            const ttsForm = new FormData();
+            ttsForm.append("text", text);
 
-        const ttsRes = await fetch("/tts", { method: "POST", body: ttsForm });
-        const ttsBlob = await ttsRes.blob();
-        const ttsUrl = URL.createObjectURL(ttsBlob);
+            const ttsRes = await fetch("/tts", { method: "POST", body: ttsForm });
+            const ttsBlob = await ttsRes.blob();
+            const ttsUrl = URL.createObjectURL(ttsBlob);
 
-        // Display student vs correct audio
-        const audioCompareDiv = document.createElement("div");
-        audioCompareDiv.classList.add("audio-comparison");
-        audioCompareDiv.innerHTML = `
-            <h4>Compare Pronunciation</h4>
-            <p><strong>Your Voice:</strong></p>
-            <audio controls src="${URL.createObjectURL(audioForShow)}"></audio>
-            <p><strong>Correct Voice:</strong></p>
-            <audio controls src="${ttsUrl}"></audio>
-        `;
-        feedbackBox.appendChild(audioCompareDiv);
+            // Display student vs correct audio
+            const audioCompareDiv = document.createElement("div");
+            audioCompareDiv.classList.add("audio-comparison");
+            audioCompareDiv.innerHTML = `
+                <h4>Compare Pronunciation</h4>
+                <p><strong>Your Voice:</strong></p>
+                <audio controls src="${URL.createObjectURL(audioForShow)}"></audio>
+                <p><strong>Correct Voice:</strong></p>
+                <audio controls src="${ttsUrl}"></audio>
+            `;
+            feedbackBox.appendChild(audioCompareDiv);
 
-        // 3️⃣ Call LLM feedback
-        const llmForm = new FormData();
-        llmForm.append("text", text);
-        llmForm.append("correct_ipa", data.correct_ipa);
-        llmForm.append("attempt_ipa", data.attempt_ipa);
-        llmForm.append("score", data.score);
+            // 3️⃣ Call LLM feedback only if toggle is checked
+            if (toggleFeedback.checked) {
+                const llmForm = new FormData();
+                llmForm.append("text", text);
+                llmForm.append("correct_ipa", data.correct_ipa);
+                llmForm.append("attempt_ipa", data.attempt_ipa);
+                llmForm.append("score", data.score);
 
-        const llmRes = await fetch("/llm-feedback", { method: "POST", body: llmForm });
-        const llmData = await llmRes.json();
+                const llmRes = await fetch("/llm-feedback", { method: "POST", body: llmForm });
+                const llmData = await llmRes.json();
 
-        const llmDiv = document.createElement("div");
-        llmDiv.classList.add("llm-feedback");
-        llmDiv.innerHTML = `<strong>LLM Feedback:</strong> ${llmData.feedback}`;
-        feedbackBox.appendChild(llmDiv);
+                const llmDiv = document.createElement("div");
+                llmDiv.classList.add("llm-feedback");
+                llmDiv.innerHTML = `<strong>LLM Feedback:</strong> ${llmData.feedback}`;
+                feedbackBox.appendChild(llmDiv);
+            }
+        }
 
         audioForSubmit = null;
         updateSubmitState();

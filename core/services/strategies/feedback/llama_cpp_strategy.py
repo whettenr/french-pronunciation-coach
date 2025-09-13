@@ -14,6 +14,11 @@ class LLamaCppFeedbackStrategy(FeedbackStrategy):
             model_path=model_path
         )
         self.max_tokens = max_tokens
+        # Initial dummy request to warm up model
+        try:
+            self.generate_feedback("bonjour", "/bɔ̃ʒuʁ/", "/bonʒuʁ/")
+        except Exception:
+            pass
 
     def generate_feedback(self, word: str, expected_phonemes: str, user_phonemes: str) -> str:
         """

@@ -10,6 +10,11 @@ class LlamaFeedbackStrategy(FeedbackStrategy):
             torch_dtype=torch.bfloat16,
             device_map="auto",
         )
+        # Initial dummy request to warm up model
+        try:
+            self.generate_feedback("bonjour", "/bɔ̃ʒuʁ/", "/bonʒuʁ/")
+        except Exception:
+            pass
 
     def generate_feedback(self, word: str, expected_phonemes: str, user_phonemes: str) -> str:
         messages = [
