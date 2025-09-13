@@ -100,19 +100,19 @@ This app provides:
 
 4. **Download language models** (choose one or more):
 
-   - **Lucie-7B** (French-optimized, recommended):
-
-     ```bash
-     huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
-     ```
-
-   - **Mistral-7B** (General-purpose, strong all-around):
+   - **Mistral-7B** (recommended):
 
      ```bash
      huggingface-cli download TheBloke/Mistral-7B-Instruct-v0.2-GGUF mistral-7b-instruct-v0.2.Q5_K_M.gguf --local-dir models --local-dir-use-symlinks False
      ```
 
-   - **Llama-3.2-3B** (Lightweight and efficient):
+   - **Lucie-7B** :
+
+     ```bash
+     huggingface-cli download OpenLLM-France/Lucie-7B-Instruct-v1.1-gguf Lucie-7B-Instruct-v1.1-q4_k_m.gguf --local-dir models --local-dir-use-symlinks False
+     ```
+
+   - **Llama-3.2-3B** :
 
      ```bash
      huggingface-cli download unsloth/Llama-3.2-3B-Instruct-GGUF Llama-3.2-3B-Instruct-Q5_K_S.gguf --local-dir models --local-dir-use-symlinks False
@@ -150,7 +150,7 @@ The app uses a `config.json` file to select feedback and TTS strategies as well 
 
 > **Notes:**
 > - `llama-cpp` offers fast and efficient inference with GGUF models.
-> - Recommended feedback models: Lucie-7B (French-focused) or Mistral-7B (general-purpose).
+> - Recommended feedback models: Lucie-7B  or Mistral-7B.
 > - TTS trade-offs: `facebook/mms-tts-fra` is faster; `kyutai` provides better quality but is slower.
 > - The first LLM inference may take longer due to model loading.
 
