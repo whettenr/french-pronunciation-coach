@@ -8,4 +8,5 @@ venv11/
 *.webm
 .DS_Store
 models/
+!/core/models/
 venv
